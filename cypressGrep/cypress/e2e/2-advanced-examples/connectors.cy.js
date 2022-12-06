@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-context('Connectors', () => {
+context('banana', () => {
   beforeEach(() => {
     cy.visit('https://example.cypress.io/commands/connectors')
   })

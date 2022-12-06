@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "test cypress",
-    "test-run-specification": "npx cypress run -s 'cypress/e2e/1-getting-started/*,cypress/e2e/3-JSONplaceholder-tests/*s'",
+    "native-test-run-specification": "npx cypress run -s 'cypress/e2e/1-getting-started/*,cypress/e2e/3-JSONplaceholder-tests/*'",
     "test-record-run-cloud-tag": "cypress run 'cypress/e2e/2-advanced-examples/*' --record --tag 'staging'",
-    "test-run-folder-cypress/grep": "npx cypress run -s 'cypress/e2e/3-*/*' --env grep='JSON'",
-    "test-run-cypress/grep": "$ npx cypress run --env grep='JSON'"
+    "test-run-folder-cypress/grep": "npx cypress run -s 'cypress/e2e/3-*/*' --env grep=JSON",
+    "test-run-cypress/grep": "npx cypress run --env grep=JSON"
   },
   "keywords": [],
   "author": "",

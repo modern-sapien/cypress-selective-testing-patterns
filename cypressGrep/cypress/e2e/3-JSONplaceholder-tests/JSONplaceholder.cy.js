@@ -1,6 +1,6 @@
 context("JSON placeholder tests", () => {
   beforeEach(() => {
-    cy.visit();
+    cy.visit("");
   });
 
   // https://on.cypress.io/interacting-with-elements
