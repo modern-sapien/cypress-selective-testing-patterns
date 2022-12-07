@@ -5,7 +5,7 @@ context("JSON placeholder tests", () => {
 
   // https://on.cypress.io/interacting-with-elements
 
-  it("JSON", () => {
+  it("JSON", { tags: "@banana" }, () => {
     // https://on.cypress.io/type
     cy.get(".action-email")
       .type("fake@email.com")

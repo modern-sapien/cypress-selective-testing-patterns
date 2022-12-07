@@ -13,13 +13,5 @@ module.exports = defineConfig({
       require("@cypress/grep/src/plugin")(config);
       return config;
     },
-    // "env": {
-    //   "grepOmitFiltered": true
-    // }
   },
 });
-
-
-
-
-// "npx cypress run --env grep=\"JSON; displays\""
