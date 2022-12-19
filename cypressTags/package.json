@@ -1,13 +1,11 @@
 {
   "scripts": {
     "test": "test cypress",
-    "tag:include":"npx cypress run --env CYPRESS_INCLUDE_TAGS=smoke",
-    "tag:exclude": "npx cypress run -s 'cypress/e2e/3-*/*' --env grep=JSON",
-    "windows-test-cypress-grep-multiple": "npx cypress run --env grep=\"JSON; displays\"",
-    "invert-cypress/grep": "npx cypress run -s 'cypress/e2e/3-*/*' --env grep='-JSON'"
-  },
+    "tag:include": "npx cypress run --env CYPRESS_INCLUDE_TAGS=smoke",
+    "tag:exclude": "npx cypress run -s 'cypress/e2e/3-*/*' --env grep=JSON"  },
   "dependencies": {
     "cypress": "^12.1.0",
+    "cypress-tags": "^1.1.2",
     "typescript": "^4.9.4"
   }
 }
