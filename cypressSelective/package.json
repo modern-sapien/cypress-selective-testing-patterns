@@ -1,0 +1,14 @@
+{
+  "name": "cypressselective",
+  "version": "1.0.0",
+  "description": "Cypress native selective testing functionality",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run cypress"
+  },
+  "author": "modernsapien",
+  "license": "ISC",
+  "dependencies": {
+    "cypress": "^12.1.0"
+  }
+}
