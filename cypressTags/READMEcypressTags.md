@@ -1,16 +1,16 @@
-# cypress-selective-testing-patterns
+# cypress-tags-notes
 Selective testing patterns using built in selective testing methods within cypress &amp; plugins; @cypress/grep &amp; cypress-tags
 
 
-## @cypress/grep package notes
+## @cypress-tags package notes
 
 ### General overview
 
-Please read the root README.md file for the general overview explaining the value of selective testing. This README will predominantly detail @cypress/grep related patterns.
+The cypress-tags package is maintained by a single community member & is the more stable of the two options.
 
 ### Steps to get started
 
-Step 1 - after installing Cypress run `npm install @cypress/grep`
+Step 1 - after installing Cypress run `npm install cypress-tags`
 
 Step 2 - config - add in setup node events requiring of the package directly follow the README from Cypress GitHub repo, not the npm docs.
 

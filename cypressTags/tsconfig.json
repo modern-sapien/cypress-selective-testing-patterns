@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-    "baseUrl": "https://github.com/annaet/cypress-tags-example",
+    "baseUrl": "https://jsonplaceholder.typicode.com/",
     "target": "es2016",
     "types": [],
     "allowSyntheticDefaultImports": true,
