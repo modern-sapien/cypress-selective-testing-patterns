@@ -3,10 +3,10 @@
     "test": "test cypress",
     "tag:include": "npx cypress run --env CYPRESS_INCLUDE_TAGS=json",
     "tag:exclude": "npx cypress run --env CYPRESS_EXCLUDE_TAGS=banana",
-    "tag:includeMultiple": "CYPRESS_INCLUDE_TAGS=smoke,json npx cypress run",
+    "tag:includeMultiple": "CYPRESS_INCLUDE_TAGS=smoke,json npx cypress run --env ",
     "tag:includeAnd": "CYPRESS_INCLUDE_USE_BOOLEAN_AND=true CYPRESS_INCLUDE_TAGS=smoke,json npx cypress run",
     "tag:excludeAnd": "CYPRESS_EXCLUDE_USE_BOOLEAN_AND=true CYPRESS_EXCLUDE_TAGS=smoke,json npx cypress run",
-    "tag:includeAndExpression": "CYPRESS_USE_INCLUDE_EXCLUDE_EXPRESSIONS=true CYPRESS_INCLUDE_EXPRESSION='(json) AND (smoke)' npx cypress run"
+    "tag:includeExcludeExpression": "CYPRESS_USE_INCLUDE_EXCLUDE_EXPRESSIONS=true CYPRESS_INCLUDE_EXPRESSION='smoke OR banana' CYPRESS_EXCLUDE_EXPRESSION='json' npx cypress run"
 
   },
   "dependencies": {

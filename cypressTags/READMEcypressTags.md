@@ -12,59 +12,73 @@ The cypress-tags package is maintained by a single community member & is the mor
 
 Step 1 - after installing Cypress run `npm install cypress-tags`
 
-Step 2 - config - add in setup node events requiring of the package directly follow the README from Cypress GitHub repo, not the npm docs.
+Step 2 - config - add in setup node events requiring of the package directly follow from the cypress.config.ts file within this directory. 
 
-Step 3 - support/e2e.js - require or import the package to have it run your e2e tests
+Step 3 - support/e2e.js - No need to require or import here as this package works from the config and you're not running any custom commands or setup. 
 
-### Use @cypress/grep & package.json explained
+### Use cypress-tags & package.json explained
 
-#### npm run native-test-run-specification
-
-``` json
- "npx cypress run -s 'cypress/e2e/1-getting-started/*,cypress/e2e/3-JSONplaceholder-tests/*'"
- ```
-
-Cypress has built in selective testing methods. What we're looking at here is pretty simple, but powerful. We could create patterns from here when running in CI to help us focus on running certain directories in different stages of our pipeline. 
-
-
--s <<< short for spec, runs the same way
-
-* <<< wild card for matching folders/sub-folders or files
-
-'testpath*,testpath/*'  <<< we're saying what directories we want to run tests from, skipping over any directories or flies that don't match that pattern
-
-#### npm run test-record-run-cloud-tag
+What we see in the example below is two things, we are setting up the basic run with the command to use this selective testing method by passing it through an environment variable referenced at run time in the first script and the script below passing it in the default pattern provided by the plugins documentation. Windows machines handle scripts at run time different based on the terminal they are running scripts with. Let's not get bogged down here, this is just what it is. 
 
 ``` json
-"cypress run 'cypress/e2e/2-advanced-examples/*' --record --tag 'staging'
+    "tag:include": "npx cypress run --env CYPRESS_INCLUDE_TAGS=json",
+    "tag:includeDoesntWorkOnWindows": "CYPRESS_INCLUDE_TAGS=json npx cypress run",
  ```
 
-This is following the same pattern as the above, but we're ALSO passing a --tag flag to the Cypress Cloud when recording. Which will let us see These specific runs easier when reviewing analytics. 
 
-The application here is EXTREMELY powerful as we could use this for running only tests within the following directories ```'frontEnd/*,criticalPath/*'``` & passing tags to tell us who should pay attention when they fail or flake. 
+```javascript
+  it(["smoke", "json"], "displays two todo items by default", () => {
+    cy.get(".class element").contains("something you want it to contain");
+  });
+```
 
-#### npm run test-run-folder-cypress/grep
+#### tag:include
 
 ``` json
-"npx cypress run -s 'cypress/e2e/3-*/*' --env grep=JSON"
+    "tag:include": "npx cypress run --env CYPRESS_INCLUDE_TAGS=json",
  ```
 
-Finally! We're using @cypress/grep package to run some tests using this grepping pattern. What do you notice? We're using a wildcard pattern for matching any directories that follow the cypress/e2e/ file path and start with "3-" & then we're invoking the package by calling "--env grep='JSON'"
+The cypress-tags references the scripts above to look through all describe(), context() & it() blocks to see if there is an array of tags to check. If the tags match the run command script we run those tests. 
 
-This will run only it() OR describe() blocks in those matching directories that contain JSON in the test title. 
+The cypress-tags package is very straight forward implementation.
 
-#### npm run test-run-cypress/grep
+#### tag:exclude
 
 ``` json
-"npx cypress run --env grep=JSON"
+    "tag:exclude": "npx cypress run --env CYPRESS_EXCLUDE_TAGS=banana",
  ```
 
-We've run the same command again, but have removed the directory/spec specification. Run these two commands and see what the difference in overall duration is.
+By using the exclude_tags command at run time we will filter out all of the describe(), context() & it() blocks that have an item in their array that matches this case
 
-... pretend like you did it, or I was waiting patiently for you to complete your work. 
+#### tag:includeMultiple
 
-It TOOK A LONG TIME!
+``` json
+"CYPRESS_INCLUDE_TAGS=smoke,json npx cypress run"
+ ```
 
-For EVERY matching directory (which is all of them if we haven't specified any). We're telling our agent/node/vm/etc. to look through each test in all of the specs within those directories. 
+Notice here how the include tag for multiple is at the front. Due to some issues with how Windows runs this package if you want to run multiple tags you should not do this approach only for Macs. This will not work on Windows and the previous approach of passing the env variable will not work at run time. You can probably get around this, but that approach is out of scope in this example project.
 
-Imagine having 500 e2e tests & long spec files (don't do this) and you're only using a handful of tags on some tests.
+This run time command will run all tests that have "smoke" or "json" in their array of tags.
+#### tag:includeAnd
+
+``` json
+"CYPRESS_INCLUDE_USE_BOOLEAN_AND=true CYPRESS_INCLUDE_TAGS=smoke,json npx cypress run"
+ ```
+
+This run time command will execute only those tests that have all matching tags within their array of tags. So in this case, "smoke" & "json" must be present in the array in order to be run. 
+
+#### tag:excludeAnd
+
+``` json
+"CYPRESS_EXCLUDE_USE_BOOLEAN_AND=true CYPRESS_EXCLUDE_TAGS=smoke,json npx cypress run"
+ ```
+
+This run time command will EXCLUDE from running only those tests that have all matching tags within their array of tags. So in this case if any tag arrays contain both, "smoke" & "json" they will not be run, but all other tests will.
+
+#### tag:includeExcludeExpression 
+
+``` json
+"CYPRESS_USE_INCLUDE_EXCLUDE_EXPRESSIONS=true CYPRESS_INCLUDE_EXPRESSION='smoke OR banana' CYPRESS_EXCLUDE_EXPRESSION='json' npx cypress run"
+ ```
+
+After all of this you want to use both, huh? You can absolutely do this, and here's an example you can take this further by including even more in the include or exclude expression like '(smoke AND regression) AND (feature1 OR banana)'.
