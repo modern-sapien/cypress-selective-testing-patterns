@@ -20,7 +20,7 @@ describe("example to-do app", () => {
     cy.visit("https://example.cypress.io/todo");
   });
 
-  it(["non-smoke", "banana"], "displays two todo items by default", () => {
+  it("displays two todo items by default", () => {
     // We use the `cy.get()` command to get all elements that match the selector.
     // Then, we use `should` to assert that there are two matched items,
     // which are the two default items.
@@ -34,7 +34,7 @@ describe("example to-do app", () => {
     cy.get(".todo-list li").last().should("have.text", "Walk the dog");
   });
 
-  it(["json", "alphabet", "non-smoke"],"can add new todo items", () => {
+  it("can add new todo items", () => {
     // We'll store our item text in a variable so we can reuse it
     const newItem = "Feed the cat";
 
@@ -94,7 +94,7 @@ describe("example to-do app", () => {
       cy.contains("Pay electric bill").should("not.exist");
     });
 
-    it(["json"],"can filter for completed tasks", () => {
+    it("can filter for completed tasks", () => {
       // We can perform similar steps as the test above to ensure
       // that only completed tasks are shown
       cy.contains("Completed").click();

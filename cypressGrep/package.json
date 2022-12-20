@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "test cypress",
-    "native-test-run-specification": "npx cypress run -s 'cypress/e2e/1-getting-started/*,cypress/e2e/3-JSONplaceholder-tests/*'",
+    "selective: basic": "npx cypress run -s 'cypress/e2e/1-getting-started/*,cypress/e2e/3-JSONplaceholder-tests/*'",
     "record-run-cloud-tag": "cypress run 'cypress/e2e/2-advanced-examples/*' --record --tag 'staging'",
     "folder-cypress/grep": "npx cypress run -s 'cypress/e2e/3-*/*' --env grep=JSON",
     "windows-test-cypress-grep-multiple": "npx cypress run --env grep=\"JSON; displays\"",

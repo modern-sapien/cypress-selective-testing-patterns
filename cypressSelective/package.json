@@ -4,7 +4,10 @@
   "description": "Cypress native selective testing functionality",
   "main": "index.js",
   "scripts": {
-    "test": "npm run cypress"
+    "non-selective": "npx cypress run",
+    "selective:base": "npx cypress run cypress/e2e/*",
+    "selective:nestedDirectories": "npx cypress run -s cypress/e2e/1-getting-started,cypress/e2e/3-todo-repeated",
+    "selective:nestedAndTags": "npx cypress run --record --key 40e89d72-10fd-4a98-8bfb-9e91c358d452 -s cypress/e2e/1-getting-started/todo.cy.js,cypress/e2e/3-todo-repeated/* --tag 'smoke,cypressSelective'"
   },
   "author": "modernsapien",
   "license": "ISC",
