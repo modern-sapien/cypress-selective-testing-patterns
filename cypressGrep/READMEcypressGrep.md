@@ -18,10 +18,10 @@ Step 3 - support/e2e.js - require or import the package to have it run your e2e 
 
 ### Use @cypress/grep & package.json explained
 
-#### npm run native-test-run-specification
+#### cygrep:base
 
 ``` json
- "npx cypress run -s 'cypress/e2e/1-getting-started/*,cypress/e2e/3-JSONplaceholder-tests/*'"
+ "npx cypress run --env grep=staging"
  ```
 
 Cypress has built in selective testing methods. What we're looking at here is pretty simple, but powerful. We could create patterns from here when running in CI to help us focus on running certain directories in different stages of our pipeline. 
@@ -33,38 +33,37 @@ Cypress has built in selective testing methods. What we're looking at here is pr
 
 'testpath*,testpath/*'  <<< we're saying what directories we want to run tests from, skipping over any directories or flies that don't match that pattern
 
-#### npm run test-record-run-cloud-tag
+#### cygrep:base
 
 ``` json
 "cypress run 'cypress/e2e/2-advanced-examples/*' --record --tag 'staging'
  ```
 
-This is following the same pattern as the above, but we're ALSO passing a --tag flag to the Cypress Cloud when recording. Which will let us see These specific runs easier when reviewing analytics. 
+We're using @cypress/grep package to run some tests using this grepping pattern. What do you notice? We're invoking the package by calling "--env grep='staging'", but this would also run using "--env grep=staging". 
 
-The application here is EXTREMELY powerful as we could use this for running only tests within the following directories ```'frontEnd/*,criticalPath/*'``` & passing tags to tell us who should pay attention when they fail or flake. 
+This will run only it() OR describe() blocks in those matching directories that contain staging anywhere in their test title. 
 
-#### npm run test-run-folder-cypress/grep
-
-``` json
-"npx cypress run -s 'cypress/e2e/3-*/*' --env grep=JSON"
- ```
-
-Finally! We're using @cypress/grep package to run some tests using this grepping pattern. What do you notice? We're using a wildcard pattern for matching any directories that follow the cypress/e2e/ file path and start with "3-" & then we're invoking the package by calling "--env grep='JSON'"
-
-This will run only it() OR describe() blocks in those matching directories that contain JSON in the test title. 
-
-#### npm run test-run-cypress/grep
+#### cygrep:baseTags
 
 ``` json
-"npx cypress run --env grep=JSON"
- ```
+"npx cypress run --env grepTags='banana'" ```
 
-We've run the same command again, but have removed the directory/spec specification. Run these two commands and see what the difference in overall duration is.
+We've run a slightly different command here referencing an array of tags within the test object itself.
 
-... pretend like you did it, or I was waiting patiently for you to complete your work. 
+```javascript
+  it("displays two todo items by default", { tags: ['banana', 'some-other-tag'] }
+```
 
-It TOOK A LONG TIME!
+When we invoke the package this time using grepTags we are asking to traverse just beyond the it() or describe() title to an object containing a string or array or strings to reference tags we'd like to grep by.
 
-For EVERY matching directory (which is all of them if we haven't specified any). We're telling our agent/node/vm/etc. to look through each test in all of the specs within those directories. 
+What are the come aways here from running these tests? 
+#### cygrep-and-seletive
+
+
+We've run the same command again, but have removed the directory/spec specification. Run these two commands to see what the overall impact to duration is.
+
+This run command was much faster! Why? 
+
+Because without specifiying the folder or spec pattern we're asking our machine to look within every spec file available to us and then to run based on what we find.
 
 Imagine having 500 e2e tests & long spec files (don't do this) and you're only using a handful of tags on some tests.
